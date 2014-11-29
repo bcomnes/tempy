@@ -1,0 +1,19 @@
+{
+  "name": "tempy",
+  "version": "1.0.0",
+  "description": "Temp sparkline for my house",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/*.js | tap-spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bcomnes/tempy.git"
+  },
+  "author": "Bret Comnes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bcomnes/tempy/issues"
+  },
+  "homepage": "https://github.com/bcomnes/tempy"
+}
