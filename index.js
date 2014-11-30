@@ -60,7 +60,8 @@ app.get('/auth/nest/callback',
     function(req, res) {
         // Figure out where to store it.
         token = req.user.accessToken
-        console.log(req.user.accessToken)
+        console.log('token: ' + token);
+        res.redirect('/');
     }
 );
 
