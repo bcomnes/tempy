@@ -3,9 +3,11 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var session = require('express-session')
 var passport = require('passport');
 var bodyParser = require('body-parser');
 var NestStrategy = require('passport-nest').Strategy;
+var Firebase = require('firebase');
 var fs = require('fs');
 
 if (fs.existsSync('./local.json')) {
@@ -16,6 +18,8 @@ if (fs.existsSync('./local.json')) {
 var routes = require('./routes/index');
 
 var app = express();
+
+var token;
 
 passport.use(new NestStrategy({
     clientID: process.env.NEST_ID || local.nestID,
@@ -40,8 +44,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
-app.use(cookieParser());
+app.use(cookieParser(process.env.COOKIE_SECRET || local.cookieSecret));
+session.cookie.secure = true;
+app.use(session({
+    secret: process.env.SESSION_SECRET || local.cookieSecret
+}));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', routes);
 
@@ -50,6 +60,8 @@ app.get('/auth/nest/callback',
     passport.authenticate('nest', {}),
     function(req, res) {
         // Figure out where to store it.
+        token = req.user.accessToken
+        console.log(req.user.accessToken)
     }
 );
 
