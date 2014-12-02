@@ -21,6 +21,19 @@ var app = express();
 
 var token;
 
+var dataRef = new Firebase('wss://developer-api.nest.com');
+dataRef.authWithCustomToken(process.env.TOKEN || local.token, function(error, authData) {
+    if (error) {
+        console.log("Login Failed!", error);
+    } else {
+        console.log("Authenticated successfully with payload:", authData);
+        dataRef.on('value', function(snapshot) {
+            console.log(snapshot.val())
+            var data = snapshot.val();
+        })
+    }
+});
+
 passport.use(new NestStrategy({
     clientID: process.env.NEST_ID || local.nestID,
     clientSecret: process.env.NEST_SECRET || local.nestSecret
