@@ -11,7 +11,7 @@ router.get('/', function(req, res) {
 router.get('/temp', function(req, res) {
   res.render('temp', {
     title: 'Tempy',
-    temp: "45 deg maybe"
+    temp: req.temps
   })
 })
 

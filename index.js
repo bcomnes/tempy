@@ -9,6 +9,8 @@ var bodyParser = require('body-parser');
 var NestStrategy = require('passport-nest').Strategy;
 var Firebase = require('firebase');
 var fs = require('fs');
+var browserify = require('browserify-middleware');
+var tempLog = require('./lib/tempLog');
 
 if (fs.existsSync('./local.json')) {
     var local = require('./local')
@@ -20,19 +22,6 @@ var routes = require('./routes/index');
 var app = express();
 
 var token;
-
-var dataRef = new Firebase('wss://developer-api.nest.com');
-dataRef.authWithCustomToken(process.env.TOKEN || local.token, function(error, authData) {
-    if (error) {
-        console.log("Login Failed!", error);
-    } else {
-        console.log("Authenticated successfully with payload:", authData);
-        dataRef.on('value', function(snapshot) {
-            console.log(snapshot.val())
-            var data = snapshot.val();
-        })
-    }
-});
 
 passport.use(new NestStrategy({
     clientID: process.env.NEST_ID || local.nestID,
@@ -64,6 +53,8 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(tempLog);
+app.use('/js', browserify('./client'));
 
 app.use('/', routes);
 
