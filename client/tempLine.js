@@ -1,6 +1,9 @@
 var sparky = require('sparky');
 
-sparky.presets.set("big", {
+window.onload = init;
+
+function init() {
+  sparky.presets.set("big", {
   width: 450,
   height: 100,
   padding: 10,
@@ -34,4 +37,5 @@ for (var i = 0; i < len; i++) {
     preset = sparky.presets.get(el.getAttribute("data-preset")),
     options = sparky.util.getElementOptions(el, preset);
   sparky.sparkline(el, data, options);
+  }
 }

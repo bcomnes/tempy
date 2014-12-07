@@ -2,4 +2,9 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p #{temp}°F
+  div(class="sparkline" data-preset="big" data-points=temp.toString())
+  span
+    label Current Tempurature: 
+    var #{temp}°F
+  p(class="caption") Temperature History in our Apartment.

@@ -62,7 +62,7 @@ app.get('/auth/nest', passport.authenticate('nest'));
 app.get('/auth/nest/callback',
     passport.authenticate('nest', {}),
     function(req, res) {
-        // Figure out where to store it.
+        // Just get a token for now.
         token = req.user.accessToken
         console.log('token: ' + token);
         res.redirect('/');

@@ -4,14 +4,15 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res) {
   res.render('index', {
-    title: 'Tempy'
+    title: 'Tempy',
+    temp: req.temps,
+    current: req.current
   });
 });
 
-router.get('/temp', function(req, res) {
-  res.render('temp', {
-    title: 'Tempy',
-    temp: req.temps
+router.get('/style', function(req, res) {
+  res.render('style', {
+    title: 'Style Test'
   })
 })
 
