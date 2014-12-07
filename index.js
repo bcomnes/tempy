@@ -11,9 +11,10 @@ var Firebase = require('firebase');
 var fs = require('fs');
 var browserify = require('browserify-middleware');
 var tempLog = require('./lib/tempLog');
+var local = {};
 
 if (fs.existsSync('./local.json')) {
-    var local = require('./local')
+    local = require('./local')
 };
 
 
