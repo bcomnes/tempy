@@ -50,11 +50,11 @@ app.use(cookieParser(process.env.COOKIE_SECRET || local.cookieSecret));
 app.use(session({
     secret: process.env.SESSION_SECRET || local.cookieSecret
 }));
+app.use('/js', browserify('./client'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(tempLog);
-app.use('/js', browserify('./client'));
 
 app.use('/', routes);
 
